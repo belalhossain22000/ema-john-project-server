@@ -37,9 +37,16 @@ async function run() {
 
     //custom operations start from here
     app.get("/products", async (req, res) => {
+      console.log(req.query)
       const results = await productsCollection.find().toArray();
       res.send(results);
     });
+
+    app.get("/totalProducts", async(req, res) => {
+
+      const results = await productsCollection.estimatedDocumentCount();
+      res.send({totalProducts:results});
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
